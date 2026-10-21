@@ -21,7 +21,7 @@ export function SplashScreen({ onFinish }) {
     }, 400);
   }, [onFinish]);
 
-  // Animasi ketik perintah install baris demi baris
+  // Animasi ketik baris perintah install
   useEffect(() => {
     if (phase !== "ready") return;
 
@@ -38,37 +38,27 @@ export function SplashScreen({ onFinish }) {
         setCharIndex(0);
         timer.current = setTimeout(tick, 700);
       } else {
-        // Semua baris selesai diketik, jalankan progress install
-        runInstall();
+        startProgress();
       }
     };
 
     timer.current = setTimeout(tick, 600);
     return () => clearTimeout(timer.current);
-  }, [phase, lineIndex, charIndex]);
+  }, [phase, lineIndex, charIndex, startProgress]);
 
-  // Simulasi progress install setelah ketik selesai
-  const runInstall = useCallback(() => {
+  // Simulasi progress install
+  const startProgress = useCallback(() => {
     let p = 0;
     const iv = setInterval(() => {
-      p += 5;
-      setProgress(p);
+      p += 4;
+      setProgress(Math.min(p, 100));
       if (p >= 100) {
         clearInterval(iv);
-        timer.current = setTimeout(finish, 900);
+        timer.current = setTimeout(finish, 800);
       }
     }, 60);
     return () => clearInterval(iv);
   }, [finish]);
-
-  useEffect(() => {
-    if (phase !== "ready") return;
-    const iv = setInterval(() => {
-      const p = progress;
-      if (p < 100) setProgress(p + 4);
-    }, 70);
-    return () => clearInterval(iv);
-  }, [phase, progress]);
 
   // Masuk ke fase ready setelah animasi masuk
   useEffect(() => {
@@ -97,8 +87,13 @@ export function SplashScreen({ onFinish }) {
       onClick={finish}
       style={{ cursor: "pointer" }}
     >
-      {/* Langit malam */}
-      <svg className="sky" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      {/* Langit malam dengan bintang dan bulan sabit */}
+      <svg
+        className="splash-sky"
+        viewBox="0 0 700 500"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+      >
         <defs>
           <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#0b0f19" />
@@ -107,111 +102,96 @@ export function SplashScreen({ onFinish }) {
           </linearGradient>
           <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="rgba(143, 208, 200, 0.35)" />
-            <stop offset="70%" stopColor="rgba(143, 208, 200, 0.05)" />
             <stop offset="100%" stopColor="rgba(143, 208, 200, 0)" />
           </radialGradient>
         </defs>
 
-        <rect width="800" height="600" fill="url(#skyGrad)" />
+        <rect width="700" height="500" fill="url(#skyGrad)" />
 
         {/* Bintang-bintang */}
         <g fill="#e8edf2" opacity="0.9">
-          {[
-            { cx: 120, cy: 80, r: 1.2 }, { cx: 210, cy: 45, r: 0.9 }, { cx: 340, cy: 110, r: 1.4 },
-            { cx: 460, cy: 60, r: 1.1 }, { cx: 580, cy: 95, r: 1.0 }, { cx: 720, cy: 40, r: 1.3 },
-            { cx: 90, cy: 200, r: 0.8 }, { cx: 200, cy: 150, r: 1.2 }, { cx: 320, cy: 190, r: 1.0 },
-            { cx: 440, cy: 140, r: 1.5 }, { cx: 560, cy: 180, r: 0.9 }, { cx: 690, cy: 130, r: 1.1 },
-            { cx: 150, cy: 320, r: 1.0 }, { cx: 290, cy: 260, r: 1.3 }, { cx: 410, cy: 300, r: 0.8 },
-            { cx: 530, cy: 240, r: 1.2 }, { cx: 660, cy: 290, r: 1.0 }, { cx: 740, cy: 200, r: 1.4 },
-            { cx: 60, cy: 420, r: 0.9 }, { cx: 180, cy: 380, r: 1.1 }, { cx: 310, cy: 430, r: 1.3 },
-            { cx: 450, cy: 390, r: 0.9 }, { cx: 590, cy: 440, r: 1.1 }, { cx: 720, cy: 380, r: 1.0 },
-          ].map((star, i) => (
-            <circle
-              key={i}
-              cx={star.cx}
-              cy={star.cy}
-              r={star.r}
-              className="star"
-              style={{ animation: `twinkle ${2 + i * 0.15}s ease-in-out infinite alternate` }}
-            />
-          ))}
+          {[120, 210, 340, 460, 580, 720, 90, 200, 320, 440, 560, 690, 150, 290, 410, 530, 660, 740, 60, 180, 310, 450, 590, 720].map(
+            (cx, i) => (
+              <circle
+                key={i}
+                cx={cx}
+                cy={60 + (i % 6) * 60}
+                r={1 + (i % 3) * 0.4}
+                className="star"
+                style={{ animation: `twinkle ${2 + i * 0.1}s ease-in-out infinite alternate` }}
+              />
+            )
+          )}
         </g>
 
         {/* Bulan sabit */}
-        <g transform="translate(640, 140)">
-          <circle cx="0" cy="0" r="42" fill="#2d7a73" opacity="0.95" />
-          <circle cx="14" cy="-4" r="42" fill="#0b0f19" />
-          <circle cx="0" cy="0" r="42" fill="url(#moonGlow)" />
+        <g transform="translate(560, 120)">
+          <circle cx="0" cy="0" r="36" fill="#2d7a73" opacity="0.95" />
+          <circle cx="12" cy="-4" r="36" fill="#0b0f19" />
+          <circle cx="0" cy="0" r="36" fill="url(#moonGlow)" />
         </g>
 
-        {/* Tanah / horizon */}
+        {/* Horizon */}
         <path
-          d="M0 560 Q 200 540 400 550 T 800 580 V 600 H 0 Z"
+          d="M0 450 Q 200 440 400 450 T 700 470 V 500 H 0 Z"
           fill="#151c22"
         />
         <path
-          d="M0 550 Q 250 530 500 540 T 800 570 V 590 H 0 Z"
+          d="M0 440 Q 250 430 500 440 T 700 460 V 490 H 0 Z"
           fill="#0b0f19"
           opacity="0.85"
         />
 
-        {/* Pohon kecil di kanan */}
-        <path d="M760 560 L 780 440 Q 770 430 760 440 L 740 560 Z" fill="#0b0f19" />
-        <circle cx="770" cy="425" r="26" fill="#151c22" />
+        {/* Pohon kecil */}
+        <path d="M660 450 L 680 360 Q 670 355 660 360 L 640 450 Z" fill="#0b0f19" />
+        <circle cx="670" cy="350" r="22" fill="#151c22" />
 
-        {/* Orang duduk sambil melihat ke langit (silhouette) */}
-        <g transform="translate(140, 460)">
-          {/* Badan duduk */}
+        {/* Orang duduk melihat ke langit */}
+        <g transform="translate(120, 380)">
           <path d="M20 40 Q 40 40 40 20 L 40 0 Q 40 -10 20 -10 L 0 0 Q 0 10 20 40 Z" fill="#0b0f19" />
-          {/* Tengkuk dan kepala */}
           <path d="M30 0 L 30 -12 Q 30 -22 20 -22 Q 10 -22 10 -12 L 10 0 Z" fill="#0b0f19" />
-          <circle cx="20" cy="-26" r="8" fill="#0b0f19" />
-          {/* Tangan yang terangkat ke langit */}
+          <circle cx="20" cy="-26" r="7" fill="#0b0f19" />
           <path d="M40 10 Q 60 10 70 0 Q 75 -5 75 -15 Q 70 -20 60 -18 Q 55 -15 50 -12 Q 45 -8 40 10 Z" fill="#0b0f19" />
-          {/* Kaki bersilang */}
           <path d="M10 40 Q 30 45 50 40 L 55 50 Q 55 60 45 62 Q 35 60 25 52 Q 15 48 10 40 Z" fill="#0b0f19" />
           <path d="M25 52 Q 45 57 55 50 L 58 60 Q 58 68 48 70 Q 38 66 28 58 Q 18 54 25 52 Z" fill="#151c22" />
         </g>
       </svg>
 
-      {/* Brand [iky] di atas */}
       <div className="splash-brand" aria-hidden="true">
         [iky]
       </div>
 
-      {/* Terminal install preview di tengah */}
-      <div className="terminal-card">
-        <div className="terminal-header">
-          <div className="dots">
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
+      <div className="splash-card">
+        <div className="splash-header">
+          <div className="splash-dots">
+            <span className="splash-dot" />
+            <span className="splash-dot" />
+            <span className="splash-dot" />
           </div>
-          <span className="terminal-title">Terminal</span>
+          <span className="splash-title">Terminal</span>
         </div>
-        <div className="terminal-body">
+        <div className="splash-body">
           {LINES.slice(0, lineIndex).map((line, i) => (
-            <div key={i} className="terminal-line">
-              <span className="prompt">$</span>{" "}
-              <span className="command">{line}</span>
+            <div key={i} className="splash-line">
+              <span className="splash-prompt">$</span>{" "}
+              <span className="splash-command">{line}</span>
             </div>
           ))}
           {lineIndex < LINES.length && (
-            <div className="terminal-line typing">
-              <span className="prompt">$</span>{" "}
-              <span className="command">{typed}</span>
-              {showCursor && <span className="cursor">█</span>}
+            <div className="splash-line typing">
+              <span className="splash-prompt">$</span>{" "}
+              <span className="splash-command">{typed}</span>
+              {showCursor && <span className="splash-cursor">█</span>}
             </div>
           )}
           {progress > 0 && (
-            <div className="terminal-progress">
-              <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{ width: `${progress}%` }}
-                />
+            <div className="splash-progress">
+              <div className="splash-bar">
+                <div className="splash-fill" style={{ width: `${progress}%` }} />
               </div>
-              <span className="progress-text">memasang @iky-art/iky… {progress}%</span>
+              <span className="splash-progress-text">
+                memasang @iky-art/iky… {progress}%
+              </span>
             </div>
           )}
         </div>
