@@ -1,5 +1,5 @@
 {
-  "name": "iky",
+  "name": "@iky-art/iky",
   "version": "1.0.0",
   "description": "CLI serbaguna dengan 50 alat harian: teks, encoding, waktu, angka, developer, dan file.",
   "type": "module",

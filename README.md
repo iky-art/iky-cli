@@ -20,7 +20,7 @@ CLI serbaguna untuk kerja terminal sehari-hari. Satu paket, 50 menu: teks, encod
 ## Pasang
 
 ```bash
-npm install -g iky
+npm install -g @iky-art/iky
 ```
 
 Atau jalankan dari repo:
@@ -153,12 +153,12 @@ npm run website:preview
 
 ## Publikasi ke npm
 
-Nama paket yang disiapkan adalah `iky`. Sebelum publikasi, cek ketersediaan nama dan masuk ke akun npm:
+Nama paket yang disiapkan adalah `@iky-art/iky` ( scoped package karena nama `iky` sudah terlalu mirip paket lain). Sebelum publikasi, cek ketersediaan nama dan masuk ke akun npm:
 
 ```bash
-npm view iky
+npm view @iky-art/iky
 npm login
-npm publish
+npm publish --access=public
 ```
 
 `prepublishOnly` menjalankan test dan smoke test sebelum paket dikirim.
