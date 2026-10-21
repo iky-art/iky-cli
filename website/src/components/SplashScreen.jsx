@@ -4,6 +4,15 @@ export function SplashScreen({ onFinish }) {
   const [phase, setPhase] = useState("entering"); // entering | ready | exiting | gone
   const timer = useRef(null);
 
+  // Safety: paksa splash hilang setelah 5 detik walau ada error client-side.
+  useEffect(() => {
+    timer.current = setTimeout(() => {
+      setPhase("gone");
+      try { onFinish(); } catch {}
+    }, 5000);
+    return () => clearTimeout(timer.current);
+  }, [onFinish]);
+
   useEffect(() => {
     timer.current = setTimeout(() => setPhase("ready"), 600);
     return () => clearTimeout(timer.current);

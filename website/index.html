@@ -13,6 +13,13 @@
     <link rel="preload" href="/assets/fonts/bricolage-grotesque-var.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/ibm-plex-sans-var.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/assets/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin />
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>
+      // Aktifkan Eruda console debugging: klik tombol Eruda di layar
+      if (!window.eruda) {
+        try { eruda.init(); } catch (_) {}
+      }
+    </script>
     <script>
       (function () {
         try {
