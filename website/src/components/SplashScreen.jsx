@@ -1,21 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const TYPE_LINES = [
-  "$ npm install -g @iky-art/iky",
-];
-
+const TYPE_LINES = ["$ npm install -g @iky-art/iky"];
 const INSTALL_LINES = [
   "added 1 package, and audited 2 packages in 2s",
   "found 0 vulnerabilities",
 ];
 
 export function SplashScreen({ onFinish }) {
-  const [phase, setPhase] = useState("entering"); // entering | ready | exiting | gone
-  const [lineIndex, setLineIndex] = useState(0);
+  const [phase, setPhase] = useState("entering");
   const [charIndex, setCharIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [installLine, setInstallLine] = useState(0);
   const timer = useRef(null);
+
+  const clearTimer = useCallback(() => {
+    if (timer.current) clearTimeout(timer.current);
+  }, []);
 
   const finish = useCallback(() => {
     setPhase("exiting");
@@ -25,27 +25,7 @@ export function SplashScreen({ onFinish }) {
     }, 400);
   }, [onFinish]);
 
-  // Ketik perintah install karakter demi karakter (lambat, terasa nyata)
-  useEffect(() => {
-    if (phase !== "ready") return;
-
-    const current = TYPE_LINES[lineIndex] ?? "";
-
-    if (charIndex < current.length) {
-      timer.current = setTimeout(() => setCharIndex(charIndex + 1), 70);
-    } else if (lineIndex < TYPE_LINES.length - 1) {
-      timer.current = setTimeout(() => {
-        setLineIndex(lineIndex + 1);
-        setCharIndex(0);
-      }, 900);
-    } else {
-      startInstall();
-    }
-
-    return () => clearTimeout(timer.current);
-  }, [phase, lineIndex, charIndex, startInstall]);
-
-  // Simulasi progres instalasi npm (lambat dan bertahap)
+  // Simulasi progres instalasi npm
   const startInstall = useCallback(() => {
     let p = 0;
     let line = 0;
@@ -69,13 +49,27 @@ export function SplashScreen({ onFinish }) {
     return () => clearInterval(iv);
   }, [finish]);
 
-  // Masuk ke fase ready setelah animasi masuk
+  // Ketik perintah install karakter demi karakter
+  useEffect(() => {
+    if (phase !== "ready") return;
+
+    const current = TYPE_LINES[0];
+    if (charIndex < current.length) {
+      timer.current = setTimeout(() => setCharIndex(charIndex + 1), 70);
+    } else {
+      startInstall();
+    }
+
+    return () => clearTimeout(timer.current);
+  }, [phase, charIndex, startInstall]);
+
+  // Masuk ke fase ready
   useEffect(() => {
     timer.current = setTimeout(() => setPhase("ready"), 500);
     return () => clearTimeout(timer.current);
   }, []);
 
-  // Paksa hilang setelah 18 detik kalau tidak ada interaksi
+  // Paksa hilang setelah 18 detik
   useEffect(() => {
     timer.current = setTimeout(finish, 18000);
     return () => clearTimeout(timer.current);
@@ -84,9 +78,9 @@ export function SplashScreen({ onFinish }) {
   if (phase === "gone") return null;
 
   const fading = phase === "exiting";
-  const currentLine = TYPE_LINES[lineIndex] ?? "";
-  const typed = currentLine.slice(0, charIndex);
-  const showCursor = phase === "ready" && lineIndex < TYPE_LINES.length - 1;
+  const current = TYPE_LINES[0];
+  const typed = current.slice(0, charIndex);
+  const showCursor = phase === "ready" && charIndex < current.length;
 
   return (
     <div
@@ -96,7 +90,7 @@ export function SplashScreen({ onFinish }) {
       onClick={finish}
       style={{ cursor: "pointer" }}
     >
-      {/* Langit malam dengan bintang dan bulan sabit */}
+      {/* Langit malam */}
       <svg
         className="splash-sky"
         viewBox="0 0 700 500"
@@ -106,7 +100,6 @@ export function SplashScreen({ onFinish }) {
         <defs>
           <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%" stopColor="#0b0f19" />
-            <stop offset="60%" stopColor="#121826" />
             <stop offset="100%" stopColor="#1b2430" />
           </linearGradient>
           <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
@@ -119,13 +112,13 @@ export function SplashScreen({ onFinish }) {
 
         {/* Bintang-bintang */}
         <g fill="#e8edf2" opacity="0.9">
-          {[120, 210, 340, 460, 580, 720, 90, 200, 320, 440, 560, 690, 150, 290, 410, 530, 660, 740, 60, 180, 310, 450, 590, 720].map(
+          {[120, 210, 340, 460, 580, 720, 90, 200, 320, 440, 560, 690].map(
             (cx, i) => (
               <circle
                 key={i}
                 cx={cx}
-                cy={60 + (i % 6) * 60}
-                r={1 + (i % 3) * 0.4}
+                cy={60 + (i % 4) * 70}
+                r={1}
                 className="star"
                 style={{ animation: `twinkle ${2 + i * 0.1}s ease-in-out infinite alternate` }}
               />
@@ -180,7 +173,7 @@ export function SplashScreen({ onFinish }) {
           <span className="splash-title">Terminal</span>
         </div>
         <div className="splash-body">
-          {lineIndex === 0 && (
+          {charIndex < current.length && (
             <div className="splash-line typing">
               <span className="splash-prompt">$</span>{" "}
               <span className="splash-command">{typed}</span>
@@ -205,7 +198,7 @@ export function SplashScreen({ onFinish }) {
         </div>
       </div>
 
-      {phase === "ready" && (
+      {phase === "ready" && charIndex >= current.length && (
         <p className="splash-hint">Klik untuk masuk ke situs</p>
       )}
     </div>
