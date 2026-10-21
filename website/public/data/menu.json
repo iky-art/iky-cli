@@ -1,0 +1,352 @@
+[
+  {
+    "number": 1,
+    "id": "info",
+    "category": "Sistem",
+    "summary": "Ringkasan sistem operasi, CPU, memori, dan runtime.",
+    "usage": "iky info"
+  },
+  {
+    "number": 2,
+    "id": "disk",
+    "category": "Sistem",
+    "summary": "Pemakaian disk untuk sebuah path.",
+    "usage": "iky disk [path]"
+  },
+  {
+    "number": 3,
+    "id": "env",
+    "category": "Sistem",
+    "summary": "Cari environment variable dengan nilai sensitif disamarkan.",
+    "usage": "iky env [kata-kunci]"
+  },
+  {
+    "number": 4,
+    "id": "ip",
+    "category": "Sistem",
+    "summary": "Alamat IP lokal pada setiap antarmuka jaringan.",
+    "usage": "iky ip"
+  },
+  {
+    "number": 5,
+    "id": "port",
+    "category": "Sistem",
+    "summary": "Periksa apakah sebuah port TCP menerima koneksi.",
+    "usage": "iky port [host] <port>"
+  },
+  {
+    "number": 6,
+    "id": "process",
+    "category": "Sistem",
+    "summary": "Detail proses Node yang sedang menjalankan CLI.",
+    "usage": "iky process"
+  },
+  {
+    "number": 7,
+    "id": "count",
+    "category": "Teks",
+    "summary": "Hitung karakter, kata, baris, kalimat, dan waktu baca.",
+    "usage": "iky count \"teks\""
+  },
+  {
+    "number": 8,
+    "id": "case",
+    "category": "Teks",
+    "summary": "Ubah teks ke lower, upper, title, camel, snake, atau kebab.",
+    "usage": "iky case <mode> \"teks\""
+  },
+  {
+    "number": 9,
+    "id": "slug",
+    "category": "Teks",
+    "summary": "Buat slug URL dari teks, mendukung pemisah khusus.",
+    "usage": "iky slug \"teks\" [--sep _]"
+  },
+  {
+    "number": 10,
+    "id": "reverse",
+    "category": "Teks",
+    "summary": "Balik urutan karakter tanpa merusak emoji atau aksen.",
+    "usage": "iky reverse \"teks\""
+  },
+  {
+    "number": 11,
+    "id": "palindrome",
+    "category": "Teks",
+    "summary": "Periksa apakah teks adalah palindrom.",
+    "usage": "iky palindrome \"teks\""
+  },
+  {
+    "number": 12,
+    "id": "diff",
+    "category": "Teks",
+    "summary": "Bandingkan dua teks per baris dengan penanda tambah dan hapus.",
+    "usage": "iky diff \"teks-a\" \"teks-b\""
+  },
+  {
+    "number": 13,
+    "id": "frequency",
+    "category": "Teks",
+    "summary": "Kata yang paling sering muncul, dengan stopword Indonesia dan Inggris.",
+    "usage": "iky frequency \"teks\" [--top 10] [--all]"
+  },
+  {
+    "number": 14,
+    "id": "replace",
+    "category": "Teks",
+    "summary": "Ganti teks secara literal atau dengan regex.",
+    "usage": "iky replace \"teks\" \"cari\" \"ganti\" [--regex] [--flags gi]"
+  },
+  {
+    "number": 15,
+    "id": "wrap",
+    "category": "Teks",
+    "summary": "Bungkus teks pada lebar kolom tertentu.",
+    "usage": "iky wrap 60 \"teks\""
+  },
+  {
+    "number": 16,
+    "id": "lines",
+    "category": "Teks",
+    "summary": "Urutkan, unikkan, rapikan, balik, atau nomori baris teks.",
+    "usage": "iky lines <aksi> \"teks\""
+  },
+  {
+    "number": 17,
+    "id": "html",
+    "category": "Encoding",
+    "summary": "Escape atau unescape entitas HTML dasar.",
+    "usage": "iky html <escape|unescape> \"teks\""
+  },
+  {
+    "number": 18,
+    "id": "base64",
+    "category": "Encoding",
+    "summary": "Encode atau decode base64, termasuk varian URL-safe.",
+    "usage": "iky base64 <encode|decode> \"teks\" [--url]"
+  },
+  {
+    "number": 19,
+    "id": "urlcode",
+    "category": "Encoding",
+    "summary": "Encode atau decode komponen URL.",
+    "usage": "iky urlcode <encode|decode> \"teks\""
+  },
+  {
+    "number": 20,
+    "id": "hex",
+    "category": "Encoding",
+    "summary": "Ubah teks UTF-8 ke hex, atau hex kembali ke teks.",
+    "usage": "iky hex <encode|decode> \"teks\""
+  },
+  {
+    "number": 21,
+    "id": "hash",
+    "category": "Encoding",
+    "summary": "Hash teks atau file dengan md5, sha1, sha256, atau sha512.",
+    "usage": "iky hash [algo] \"teks\" | iky hash [algo] --file path"
+  },
+  {
+    "number": 22,
+    "id": "uuid",
+    "category": "Encoding",
+    "summary": "Buat UUID v4 acak, satu atau beberapa sekaligus.",
+    "usage": "iky uuid [jumlah] [--upper]"
+  },
+  {
+    "number": 23,
+    "id": "jwt",
+    "category": "Encoding",
+    "summary": "Baca header dan payload JWT tanpa memverifikasi tanda tangan.",
+    "usage": "iky jwt \"token\""
+  },
+  {
+    "number": 24,
+    "id": "password",
+    "category": "Encoding",
+    "summary": "Buat password acak dengan panjang dan karakter yang dipilih.",
+    "usage": "iky password [panjang] [--no-symbols] [--no-upper] [--no-numbers]"
+  },
+  {
+    "number": 25,
+    "id": "now",
+    "category": "Waktu",
+    "summary": "Waktu sekarang dalam epoch, ISO, UTC, dan zona waktu lokal.",
+    "usage": "iky now"
+  },
+  {
+    "number": 26,
+    "id": "time",
+    "category": "Waktu",
+    "summary": "Konversi epoch atau tanggal menjadi beberapa format sekaligus.",
+    "usage": "iky time \"2026-10-20\" | iky time 1700000000"
+  },
+  {
+    "number": 27,
+    "id": "datediff",
+    "category": "Waktu",
+    "summary": "Selisih dua tanggal dalam hari, minggu, bulan, dan hari kerja.",
+    "usage": "iky datediff \"2026-01-01\" \"2026-12-31\""
+  },
+  {
+    "number": 28,
+    "id": "age",
+    "category": "Waktu",
+    "summary": "Hitung usia, total hari, dan ulang tahun berikutnya.",
+    "usage": "iky age \"2000-05-17\""
+  },
+  {
+    "number": 29,
+    "id": "countdown",
+    "category": "Waktu",
+    "summary": "Hitung sisa waktu menuju tanggal, atau waktu yang sudah lewat.",
+    "usage": "iky countdown \"2027-01-01\""
+  },
+  {
+    "number": 30,
+    "id": "calendar",
+    "category": "Waktu",
+    "summary": "Tampilkan kalender satu bulan dengan penanda hari ini.",
+    "usage": "iky calendar [bulan] [tahun]"
+  },
+  {
+    "number": 31,
+    "id": "calc",
+    "category": "Angka",
+    "summary": "Kalkulator ekspresi dengan fungsi matematika, tanpa eval.",
+    "usage": "iky calc \"2 * (3 + 4)\""
+  },
+  {
+    "number": 32,
+    "id": "unit",
+    "category": "Angka",
+    "summary": "Konversi panjang, massa, suhu, dan ukuran data.",
+    "usage": "iky unit <nilai> <dari> <ke>"
+  },
+  {
+    "number": 33,
+    "id": "percent",
+    "category": "Angka",
+    "summary": "Hitung persentase, perubahan, dan rasio dengan langkah jelas.",
+    "usage": "iky percent <of|change|ratio> <x> <y>"
+  },
+  {
+    "number": 34,
+    "id": "stats",
+    "category": "Angka",
+    "summary": "Rata-rata, median, modus, rentang, dan simpangan baku.",
+    "usage": "iky stats 1 2 3 4"
+  },
+  {
+    "number": 35,
+    "id": "prime",
+    "category": "Angka",
+    "summary": "Periksa bilangan prima dan tampilkan faktorisasinya.",
+    "usage": "iky prime 97"
+  },
+  {
+    "number": 36,
+    "id": "gcdlcm",
+    "category": "Angka",
+    "summary": "Hitung FPB dan KPK dari dua angka atau lebih.",
+    "usage": "iky gcdlcm 12 18 24"
+  },
+  {
+    "number": 37,
+    "id": "dice",
+    "category": "Acak & Warna",
+    "summary": "Lempar dadu dengan notasi seperti 2d6+3.",
+    "usage": "iky dice 2d6+3"
+  },
+  {
+    "number": 38,
+    "id": "pick",
+    "category": "Acak & Warna",
+    "summary": "Pilih satu atau beberapa item secara acak dan adil.",
+    "usage": "iky pick apel jeruk mangga [--count 1]"
+  },
+  {
+    "number": 39,
+    "id": "color",
+    "category": "Acak & Warna",
+    "summary": "Detail warna dari hex, rgb, atau hsl, termasuk kontras hitam dan putih.",
+    "usage": "iky color \"#d95d39\""
+  },
+  {
+    "number": 40,
+    "id": "contrast",
+    "category": "Acak & Warna",
+    "summary": "Uji rasio kontras WCAG antara warna teks dan latar.",
+    "usage": "iky contrast \"#1b2430\" \"#e8edf2\""
+  },
+  {
+    "number": 41,
+    "id": "morse",
+    "category": "Acak & Warna",
+    "summary": "Encode atau decode kode Morse internasional.",
+    "usage": "iky morse <encode|decode> \"sos\""
+  },
+  {
+    "number": 42,
+    "id": "json",
+    "category": "Developer",
+    "summary": "Validasi, rapikan, atau minify JSON dari teks maupun file.",
+    "usage": "iky json <pretty|minify|valid> <teks|--file path>"
+  },
+  {
+    "number": 43,
+    "id": "jsonpath",
+    "category": "Developer",
+    "summary": "Ambil nilai dari JSON dengan path sederhana.",
+    "usage": "iky jsonpath data.json \"user.name\""
+  },
+  {
+    "number": 44,
+    "id": "url",
+    "category": "Developer",
+    "summary": "Uraikan komponen URL dan query string.",
+    "usage": "iky url \"https://example.com/halaman?q=iky\""
+  },
+  {
+    "number": 45,
+    "id": "http",
+    "category": "Developer",
+    "summary": "Cek status, header, dan waktu respons sebuah URL.",
+    "usage": "iky http https://example.com [--head]"
+  },
+  {
+    "number": 46,
+    "id": "dns",
+    "category": "Developer",
+    "summary": "Resolve record DNS untuk A, AAAA, MX, TXT, NS, atau CNAME.",
+    "usage": "iky dns example.com [A]"
+  },
+  {
+    "number": 47,
+    "id": "regex",
+    "category": "Developer",
+    "summary": "Uji pola regex dan lihat semua kecocokan beserta grupnya.",
+    "usage": "iky regex \"\\d+\" \"abc 123\" g"
+  },
+  {
+    "number": 48,
+    "id": "md-toc",
+    "category": "Developer",
+    "summary": "Buat daftar isi Markdown dari heading, dengan anchor ala GitHub.",
+    "usage": "iky md-toc README.md"
+  },
+  {
+    "number": 49,
+    "id": "tree",
+    "category": "File",
+    "summary": "Tampilkan struktur direktori dengan batas kedalaman.",
+    "usage": "iky tree [path] [kedalaman] [--all]"
+  },
+  {
+    "number": 50,
+    "id": "file-info",
+    "category": "File",
+    "summary": "Statistik file, tipe MIME, dan hash SHA-256.",
+    "usage": "iky file-info package.json"
+  }
+]

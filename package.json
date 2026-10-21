@@ -1,0 +1,36 @@
+{
+  "name": "iky",
+  "version": "1.0.0",
+  "description": "CLI serbaguna dengan 50 alat harian: teks, encoding, waktu, angka, developer, dan file.",
+  "type": "module",
+  "bin": {
+    "iky": "./bin/iky.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node ./bin/iky.js",
+    "test": "node --test",
+    "smoke": "node ./test/smoke.js",
+    "website": "npm --prefix website run dev",
+    "website:build": "npm --prefix website run build",
+    "website:preview": "npm --prefix website run preview",
+    "prepublishOnly": "npm test && npm run smoke"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "keywords": [
+    "cli",
+    "toolkit",
+    "terminal",
+    "developer-tools",
+    "productivity",
+    "indonesia"
+  ],
+  "license": "MIT"
+}
