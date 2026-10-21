@@ -20,6 +20,14 @@ export function Footer() {
             {link.label}
           </a>
         ))}
+        <a
+          href="https://github.com/iky-art/iky-cli"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="foot-nav-item"
+        >
+          Repo iky-cli di GitHub
+        </a>
       </nav>
 
       <p className="foot-meta">Situs resmi · MIT · v1.0.0</p>

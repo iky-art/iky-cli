@@ -33,15 +33,19 @@ export function Hero({ notify }) {
               $
             </span>
             <span className="sr-only">Perintah pemasangan: </span>
-            npm i -g iky
+            npm i -g @iky-art/iky
           </code>
-          <CopyButton value="npm i -g iky" label="perintah pemasangan" notify={notify} />
+          <CopyButton value="npm i -g @iky-art/iky" label="perintah pemasangan" notify={notify} />
         </div>
 
         <div className="mt-8 flex flex-wrap gap-3">
           <a className="btn btn-primary gap-2" href="#menu">
             Lihat 50 menu
             <Icon name="arrow" className="h-[18px] w-[18px]" />
+          </a>
+          <a className="btn btn-quiet gap-2" href="https://github.com/iky-art/iky-cli" target="_blank" rel="noopener noreferrer">
+            Kunjungi repo iky-cli
+            <Icon name="github" className="h-[18px] w-[18px]" />
           </a>
           <a className="btn btn-quiet" href="#panduan">
             Lihat contoh perintah

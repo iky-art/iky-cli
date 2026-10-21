@@ -6,7 +6,7 @@ const TABS = [
   {
     id: "npm",
     label: "npm",
-    command: "npm install -g iky",
+    command: "npm install -g @iky-art/iky",
     note: (
       <>
         Pasang global agar perintah <code>iky</code> tersedia di semua direktori.
@@ -16,7 +16,7 @@ const TABS = [
   {
     id: "pnpm",
     label: "pnpm",
-    command: "pnpm add -g iky",
+    command: "pnpm add -g @iky-art/iky",
     note: (
       <>
         Sama seperti npm: pasang global agar perintah <code>iky</code> tersedia di mana saja.
@@ -26,7 +26,7 @@ const TABS = [
   {
     id: "npx",
     label: "npx",
-    command: "npx iky list",
+    command: "npx @iky-art/iky list",
     note: "Menjalankan tanpa memasang global. Cocok untuk mencoba satu perintah.",
   },
 ];
@@ -75,7 +75,7 @@ export function InstallSection({ notify }) {
 
           <div className="install-panel raised">
             <div className="package-line">
-              <span className="package-name">iky</span>
+              <span className="package-name">@iky-art/iky</span>
               <span>v1.0.0 · Node.js 18.17+</span>
             </div>
 
