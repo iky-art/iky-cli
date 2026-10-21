@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const LINES = [
+const TYPE_LINES = [
   "$ npm install -g @iky-art/iky",
-  "added 1 package, and audited 2 packages in 1s",
+];
+
+const INSTALL_LINES = [
+  "added 1 package, and audited 2 packages in 2s",
   "found 0 vulnerabilities",
 ];
 
@@ -11,6 +14,7 @@ export function SplashScreen({ onFinish }) {
   const [lineIndex, setLineIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [installLine, setInstallLine] = useState(0);
   const timer = useRef(null);
 
   const finish = useCallback(() => {
@@ -21,42 +25,47 @@ export function SplashScreen({ onFinish }) {
     }, 400);
   }, [onFinish]);
 
-  // Animasi ketik baris perintah install
+  // Ketik perintah install karakter demi karakter (lambat, terasa nyata)
   useEffect(() => {
     if (phase !== "ready") return;
 
-    let i = lineIndex;
-    let j = charIndex;
+    const current = TYPE_LINES[lineIndex] ?? "";
 
-    const tick = () => {
-      const current = LINES[i] ?? "";
-      if (j < current.length) {
-        setCharIndex(j + 1);
-        timer.current = setTimeout(tick, 45);
-      } else if (i < LINES.length - 1) {
-        setLineIndex(i + 1);
+    if (charIndex < current.length) {
+      timer.current = setTimeout(() => setCharIndex(charIndex + 1), 70);
+    } else if (lineIndex < TYPE_LINES.length - 1) {
+      timer.current = setTimeout(() => {
+        setLineIndex(lineIndex + 1);
         setCharIndex(0);
-        timer.current = setTimeout(tick, 700);
-      } else {
-        startProgress();
-      }
-    };
+      }, 900);
+    } else {
+      startInstall();
+    }
 
-    timer.current = setTimeout(tick, 600);
     return () => clearTimeout(timer.current);
-  }, [phase, lineIndex, charIndex, startProgress]);
+  }, [phase, lineIndex, charIndex, startInstall]);
 
-  // Simulasi progress install
-  const startProgress = useCallback(() => {
+  // Simulasi progres instalasi npm (lambat dan bertahap)
+  const startInstall = useCallback(() => {
     let p = 0;
+    let line = 0;
     const iv = setInterval(() => {
-      p += 4;
+      p += 2;
       setProgress(Math.min(p, 100));
+
+      if (p > 30 && line === 0) {
+        setInstallLine(1);
+        line = 1;
+      } else if (p > 70 && line === 1) {
+        setInstallLine(2);
+        line = 2;
+      }
+
       if (p >= 100) {
         clearInterval(iv);
-        timer.current = setTimeout(finish, 800);
+        timer.current = setTimeout(finish, 900);
       }
-    }, 60);
+    }, 110);
     return () => clearInterval(iv);
   }, [finish]);
 
@@ -66,18 +75,18 @@ export function SplashScreen({ onFinish }) {
     return () => clearTimeout(timer.current);
   }, []);
 
-  // Paksa hilang setelah 12 detik kalau tidak ada interaksi
+  // Paksa hilang setelah 18 detik kalau tidak ada interaksi
   useEffect(() => {
-    timer.current = setTimeout(finish, 12000);
+    timer.current = setTimeout(finish, 18000);
     return () => clearTimeout(timer.current);
   }, [finish]);
 
   if (phase === "gone") return null;
 
   const fading = phase === "exiting";
-  const currentLine = LINES[lineIndex] ?? "";
+  const currentLine = TYPE_LINES[lineIndex] ?? "";
   const typed = currentLine.slice(0, charIndex);
-  const showCursor = phase === "ready" && lineIndex < LINES.length - 1;
+  const showCursor = phase === "ready" && lineIndex < TYPE_LINES.length - 1;
 
   return (
     <div
@@ -171,19 +180,18 @@ export function SplashScreen({ onFinish }) {
           <span className="splash-title">Terminal</span>
         </div>
         <div className="splash-body">
-          {LINES.slice(0, lineIndex).map((line, i) => (
-            <div key={i} className="splash-line">
-              <span className="splash-prompt">$</span>{" "}
-              <span className="splash-command">{line}</span>
-            </div>
-          ))}
-          {lineIndex < LINES.length && (
+          {lineIndex === 0 && (
             <div className="splash-line typing">
               <span className="splash-prompt">$</span>{" "}
               <span className="splash-command">{typed}</span>
               {showCursor && <span className="splash-cursor">█</span>}
             </div>
           )}
+          {INSTALL_LINES.slice(0, installLine).map((line, i) => (
+            <div key={i} className="splash-line">
+              <span className="splash-command">{line}</span>
+            </div>
+          ))}
           {progress > 0 && (
             <div className="splash-progress">
               <div className="splash-bar">
