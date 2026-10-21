@@ -1406,8 +1406,43 @@ button {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Terminal Install Section ===== */
-.terminal-card {
+/* ===== Install Preview (mirip splash screen) ===== */
+.install-preview {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 20px;
+  overflow: hidden;
+  border-radius: var(--radius-l);
+  background: var(--base);
+}
+
+.install-preview-fade {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.install-sky {
+  display: block;
+  width: 100%;
+  height: 300px;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.45));
+}
+
+.install-brand {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--teal-text);
+  margin: -10px auto 8px;
+  text-align: center;
+  opacity: 0;
+  animation: splash-brand-in 700ms ease forwards;
+  animation-delay: 200ms;
+}
+
+.install-card {
   max-width: 520px;
   margin: 0 auto;
   background: var(--surface);
@@ -1419,7 +1454,7 @@ button {
   overflow: hidden;
 }
 
-.terminal-header {
+.install-header {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1428,28 +1463,23 @@ button {
   background: color-mix(in srgb, var(--base-deep) 80%, transparent);
 }
 
-.terminal-dots {
+.install-dots {
   display: flex;
   gap: 5px;
 }
 
-.terminal-dot {
+.install-dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background: var(--ink-3);
 }
 
-.terminal-dot:nth-child(1) { background: #ff5f56; animation: dot-pulse 1.4s ease-in-out infinite; }
-.terminal-dot:nth-child(2) { background: #ffbd2e; animation: dot-pulse 1.4s ease-in-out infinite 0.2s; }
-.terminal-dot:nth-child(3) { background: #27c93f; animation: dot-pulse 1.4s ease-in-out infinite 0.4s; }
+.install-dot:nth-child(1) { background: #ff5f56; animation: dot-pulse 1.4s ease-in-out infinite; }
+.install-dot:nth-child(2) { background: #ffbd2e; animation: dot-pulse 1.4s ease-in-out infinite 0.2s; }
+.install-dot:nth-child(3) { background: #27c93f; animation: dot-pulse 1.4s ease-in-out infinite 0.4s; }
 
-@keyframes dot-pulse {
-  0%, 100% { opacity: 0.45; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.12); }
-}
-
-.terminal-title {
+.install-title {
   margin-left: auto;
   color: var(--ink-2);
   font-family: var(--font-mono);
@@ -1458,7 +1488,7 @@ button {
   letter-spacing: 0.05em;
 }
 
-.terminal-body {
+.install-body {
   padding: 16px;
   font-family: var(--font-mono);
   font-size: 0.86rem;
@@ -1467,29 +1497,28 @@ button {
   background: var(--base-deep);
 }
 
-.terminal-line {
+.install-line {
   margin: 0 0 10px;
   white-space: pre-wrap;
 }
 
-.terminal-line.typing { margin-bottom: 0; }
+.install-line.typing { margin-bottom: 0; }
 
-.terminal-prompt { color: var(--accent); margin-right: 8px; }
-.terminal-command { color: var(--ink); }
-.terminal-cursor {
+.install-prompt { color: var(--accent); margin-right: 8px; }
+.install-command { color: var(--ink); }
+.install-cursor {
   color: var(--teal-text);
   animation: blink 1s step-end infinite;
   margin-left: 2px;
 }
-@keyframes blink { 50% { opacity: 0; } }
 
-.terminal-progress {
+.install-progress {
   margin-top: 14px;
   padding-top: 10px;
   border-top: 1px solid color-mix(in srgb, var(--line) 40%, transparent);
 }
 
-.terminal-bar {
+.install-bar {
   width: 100%;
   height: 7px;
   background: color-mix(in srgb, var(--line) 50%, transparent);
@@ -1498,7 +1527,7 @@ button {
   margin-bottom: 6px;
 }
 
-.terminal-fill {
+.install-fill {
   height: 100%;
   background: var(--teal-text);
   border-radius: 4px;
@@ -1506,10 +1535,22 @@ button {
   transition: width 250ms ease;
 }
 
-.terminal-progress-text {
+.install-progress-text {
   color: var(--ink-3);
   font-size: 0.78rem;
   text-align: right;
+}
+
+.install-hint {
+  margin: 0;
+  margin-top: 12px;
+  color: var(--ink-3);
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  text-align: center;
+  opacity: 0;
+  animation: splash-hint-fade 500ms ease forwards;
+  animation-delay: 900ms;
 }
 
 .skip-link {
