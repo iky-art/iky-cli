@@ -1,34 +1,35 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export function SplashScreen({ onFinish }) {
   const [phase, setPhase] = useState("entering"); // entering | ready | exiting | gone
   const timer = useRef(null);
 
-  // Safety: paksa splash hilang setelah 5 detik walau ada error client-side.
-  useEffect(() => {
+  const finish = useCallback(() => {
+    setPhase("exiting");
     timer.current = setTimeout(() => {
       setPhase("gone");
-      try { onFinish(); } catch {}
-    }, 5000);
-    return () => clearTimeout(timer.current);
+      onFinish();
+    }, 400);
   }, [onFinish]);
 
+  // Masuk ke fase "ready" setelah animasi masuk selesai.
   useEffect(() => {
     timer.current = setTimeout(() => setPhase("ready"), 600);
     return () => clearTimeout(timer.current);
   }, []);
 
+  // Paksa hilang setelah 5 detik kalau tidak ada interaksi.
+  useEffect(() => {
+    timer.current = setTimeout(finish, 5000);
+    return () => clearTimeout(timer.current);
+  }, [finish]);
+
+  // Fase "ready" tunggu sebentar lalu auto-hide (bisa diklik untuk lewat).
   useEffect(() => {
     if (phase !== "ready") return;
-    timer.current = setTimeout(() => {
-      setPhase("exiting");
-      timer.current = setTimeout(() => {
-        setPhase("gone");
-        onFinish();
-      }, 400);
-    }, 1200);
+    timer.current = setTimeout(finish, 1200);
     return () => clearTimeout(timer.current);
-  }, [phase, onFinish]);
+  }, [phase, finish]);
 
   if (phase === "gone") return null;
 
@@ -39,6 +40,8 @@ export function SplashScreen({ onFinish }) {
       className={`splash ${fading ? "splash-fade" : ""}`}
       role="region"
       aria-label="Layar pembuka iky"
+      onClick={finish}
+      style={{ cursor: "pointer" }}
     >
       <div className="splash-inner">
         <div className="splash-mark" aria-hidden="true">
